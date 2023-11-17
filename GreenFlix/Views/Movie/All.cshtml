@@ -1,0 +1,76 @@
+﻿@model AllMoviesQueryModel
+
+@{
+    ViewBag.Title = "All Movies";
+}
+
+<form method="get">
+    <div class="row">
+        <div class="form-group col-md-4">
+            <div class="form-group">
+                <label asp-for="Title"></label>
+                <select asp-for="Title" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var title in Model.Titles)
+                    {
+                        <option value="@title">@title</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="Marvel,Spider-Man,etc..">
+        </div>
+        <div class="form-group col-md-4">
+            <div class="form-group">
+                <label asp-for="Sorting"></label>
+                <select asp-for="Sorting" class="form-control">
+                    <option value="0" selected>Date Created</option>
+                    <option value="1">Year</option>
+                    <option value="2">Title AndGenre</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <input type="submit" class="btn btn-primary d-none" value="Search" />
+</form>
+
+@{
+    var previousPage = Model.CurentPage - 1;
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+
+    //formula za zakruglqne na broq stranici
+    var maxPage = Math.Ceiling((double)Model.TotalMovies / AllMoviesQueryModel.MoviesPerPage);
+}
+
+<div class="row mb-5">
+    <div class="col-md-6">
+        <a class="btn btn-primary @(Model.CurentPage == 1 ? "disabled" : string.Empty)"
+           asp-controller="Movies"
+           asp-action="All"
+           asp-route-currentPage="@previousPage"
+           asp-route-title="@Model.Title"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.Sorting)"><<</a>
+    </div>
+    <div class="col-md-6">
+        <a class="btn btn-primary float-right @(Model.CurentPage==maxPage?"disabled" : string.Empty)" 
+           asp-controller="Movies"
+           asp-action="All" 
+           asp-route-currentPage="@(Model.CurentPage + 1)"
+           asp-route-title="@Model.Title"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.Sorting)">>></a>
+    </div>
+</div>
+
+@if (!Model.Movies.Any())
+{
+    <h2 class="text-center">No Movies Found.</h2>
+}
+
+<partial name="_MoviePartial" model="@Model.Movies" />

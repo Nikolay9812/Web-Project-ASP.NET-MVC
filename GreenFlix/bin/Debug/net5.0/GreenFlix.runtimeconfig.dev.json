@@ -1,0 +1,9 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\GL72M 7RDX-1043CZ\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\GL72M 7RDX-1043CZ\\.nuget\\packages",
+      "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+    ]
+  }
+}

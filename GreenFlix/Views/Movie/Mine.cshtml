@@ -1,0 +1,13 @@
+﻿@model IEnumerable<MovieServiceModel>
+
+@{
+    ViewBag.Title = "My Movies";
+    ViewBag.AllowMovieEdit = true;
+}
+
+@if (!Model.Any())
+{
+    <h2 class="text-center">You dont have movies yet.Steal some movies for us,in exchange we gona give you some of this cashmoney.</h2>
+}
+
+<partial name="_MoviePartial" model="@Model" />

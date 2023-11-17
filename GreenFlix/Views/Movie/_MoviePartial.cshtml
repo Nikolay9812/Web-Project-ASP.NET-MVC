@@ -1,0 +1,28 @@
+﻿@model IEnumerable<MovieServiceModel>
+
+<link href="@Url.Content("../css/site.css")" rel="stylesheet" type="text/css">
+<script src="../js/site.js"></script>
+
+<div class="row">
+    @foreach (var movie in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title @movie.Genre @movie.Year (@movie.CategoryName)">
+                <div class="card-body text-center">
+                    <h5 class="card-title tet-center">@movie.Title (@movie.Year)</h5>
+
+                    
+                    <a class="pop-cont btn btn-primary">View<span class="pop-up">@movie.Description</span></a>
+                    
+
+                    @if (ViewBag.AllowMovieEdit == true || User.IsAdmin()) //ili sme sobstvenici na filma ili sme admin togava ni dai opciite edit i delete
+                    {
+                        <a asp-controller="Movie" asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-warning">Edit</a>
+                        <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-danger">Delete</a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
